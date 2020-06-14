@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_14_035632) do
+ActiveRecord::Schema.define(version: 2020_06_14_200816) do
+
+  create_table "user_follower_imports", force: :cascade do |t|
+    t.integer "num_all_followers"
+    t.integer "num_synced"
+    t.string "next_cursor"
+    t.boolean "completed"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_follower_imports_on_user_id"
+  end
+
+  create_table "user_followers", force: :cascade do |t|
+    t.string "uid"
+    t.string "name"
+    t.string "screen_name"
+    t.string "image_url"
+    t.boolean "protected"
+    t.boolean "verified"
+    t.integer "followers_count"
+    t.string "account_created_at"
+    t.string "location"
+    t.integer "score"
+    t.integer "score_version"
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_followers_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "uid"

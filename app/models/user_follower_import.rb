@@ -1,0 +1,2 @@
+class UserFollowerImport < ApplicationRecord
+end
