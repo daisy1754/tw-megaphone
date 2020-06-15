@@ -40,7 +40,7 @@ class SyncFollowersJob < ApplicationJob
         users = JSON.parse(response.body)
         # TODO: looking into optimzing this via bulk insert
         users.each do |u|
-          UserFollower.create(
+          f = UserFollower.create(
             user_id: user.id,
             uid: u["id"],
             name: u["name"],
@@ -52,6 +52,7 @@ class SyncFollowersJob < ApplicationJob
             account_created_at: u["created_at"],
             location: u["location"]
           )
+          add_score_v0(f)
         end
 
         # TODO: set score
@@ -94,5 +95,15 @@ class SyncFollowersJob < ApplicationJob
     url = "https://api.twitter.com/1.1/users/lookup.json?user_id=#{ids.join(",")}"
     puts url # debug
     HTTParty.get(url, headers: { 'Authorization' => get_auth_header(user, :get, url) })
+  end
+
+  def add_score_v0(follower)
+    score = 100
+    score += 100 if follower.verified
+    score -= 50 if follower.protected
+    score += [follower.followers_count / 100, 100].min
+    follower.score = score
+    follower.score_version = 0
+    follower.save!
   end
 end
