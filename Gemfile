@@ -62,3 +62,5 @@ gem 'twitter'
 gem 'oauth'
 gem 'httparty'
 gem 'simple_oauth'
+gem 'delayed_job_active_record'
+gem "daemons" 
