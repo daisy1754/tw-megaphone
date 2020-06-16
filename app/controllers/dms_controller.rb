@@ -6,6 +6,7 @@ class DmsController < ApplicationController
     def create
         return head(:unprocessable_entity) if params["dm"]["text"].empty?
         d = Dm.create(user_id: current_user.id, content: params["dm"]["text"])
+        SendDmsJob.perform_later(current_user.id, d.id)
         redirect_to d
     end
 
