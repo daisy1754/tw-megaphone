@@ -15,12 +15,12 @@ class SyncFollowersJob < ApplicationJob
       response = fetch_followers(user, follower_import.next_cursor)
       if response.code == 429 then
         puts "reached rate limit for #{user.uid} - continue in 15min"
-        SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user)
+        SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
         break
       end
       if response.code != 200 then
         puts "unexepected error - #{response.code} #{response.body}"
-        SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user)
+        SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
         break
       end
 
@@ -33,7 +33,7 @@ class SyncFollowersJob < ApplicationJob
         if response.code != 200 then
           puts "unexepected error - #{response.code} #{response.body}"
           # TODO implement better retry strategy. For now let's just give up if one of HTTP request fails
-          SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user)
+          SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
           break
         end
 
