@@ -1,0 +1,8 @@
+<h4>Draft your new DM</h4>
+<div>
+TODO: add test send button here
+</div>
+<%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form"} do |f| %>
+  <%= f.text_area :text, :size => "60x12" %>
+  <%= submit_tag "Schedule sending DMs" %>
+<% end %>

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
+  resources :dms, only: [:new, :create, :show]
 
   root 'home#top'
 end
