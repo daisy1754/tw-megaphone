@@ -1,5 +1,18 @@
 <div>
-<% @followers.each do |f| %>
-    <%= f.name %>
+<h4>Ranking rules</h4>
+<p>You can configure how to rank your followers</p>
+<div>
+<% @rules.each do |r| %>
+    <%= r.rule_type %>
 <% end %>
+</div>
+<button>Save</button>
+
+<h4>Your followers</h4>
+<p>Based on the latest rules, here is top 100 followers and corresponding score</p>
+<ul>
+<% @followers.each do |f| %>
+    <li><%= f.name %></li>
+<% end %>
+</ul>
 </div>
