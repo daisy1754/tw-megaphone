@@ -11,15 +11,15 @@ class SyncFollowersJob < ApplicationJob
     follower_import = UserFollowerImport.find_by_user_id(user.id)
     return if follower_import.completed
     loop do
-      puts "sync followers for #{user.uid} with cursor #{follower_import.next_cursor}"
+      Delayed::Worker.logger.info("sync followers for #{user.uid} with cursor #{follower_import.next_cursor}")
       response = fetch_followers(user, follower_import.next_cursor)
       if response.code == 429 then
-        puts "reached rate limit for #{user.uid} - continue in 15min"
+        Delayed::Worker.logger.info("reached rate limit for #{user.uid} - continue in 15min")
         SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
         break
       end
       if response.code != 200 then
-        puts "unexepected error - #{response.code} #{response.body}"
+        Delayed::Worker.logger.info("unexepected error - #{response.code} #{response.body}")
         SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
         break
       end
@@ -31,7 +31,7 @@ class SyncFollowersJob < ApplicationJob
       r["ids"].each_slice(num_lookup) do |ids| 
         response = lookup_users(user, ids)
         if response.code != 200 then
-          puts "unexepected error - #{response.code} #{response.body}"
+          Delayed::Worker.logger.info("unexepected error - #{response.code} #{response.body}")
           # TODO implement better retry strategy. For now let's just give up if one of HTTP request fails
           SyncFollowersJob.set(wait_until: 15.minutes.from_now).perform_later(user.id)
           break
@@ -64,7 +64,7 @@ class SyncFollowersJob < ApplicationJob
       follower_import.completed = r["next_cursor"] == 0
       follower_import.save!
       if follower_import.completed then
-        puts "successfully sync #{follower_import.num_synced} followers for #{user.uid}"
+        Delayed::Worker.logger.info("successfully sync #{follower_import.num_synced} followers for #{user.uid}")
         break
       end
     end
@@ -87,13 +87,11 @@ class SyncFollowersJob < ApplicationJob
 #    count = 50 if user.uid == "107416172" # for debugging
     url = "https://api.twitter.com/1.1/followers/ids.json?count=#{count}"
     url += "&cursor=#{cursor}" if cursor and cursor.to_s != "0"
-    puts url # debug
     HTTParty.get(url, headers: { 'Authorization' => get_auth_header(user, :get, url) })
   end
 
   def lookup_users(user, ids)
     url = "https://api.twitter.com/1.1/users/lookup.json?user_id=#{ids.join(",")}"
-    puts url # debug
     HTTParty.get(url, headers: { 'Authorization' => get_auth_header(user, :get, url) })
   end
 
