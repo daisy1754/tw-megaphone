@@ -1,8 +1,30 @@
-<h4>Draft your new DM</h4>
-<div>
-TODO: add test send button here
+<div class="bg-light" style="padding-bottom: 40px;">
+  <header class="masthead text-white text-center masthead">
+    <nav class="navbar navbar-light static-top">
+      <div class="container">
+        <a class="navbar-brand text-white" href="">tw-megaphone</a>
+        <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <h5>Draft your direct message to followers</h5>
+    <div class="row justify-content-center form-wrapper">
+      <%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form form-group col-10"} do |f| %>
+      <div><%= f.text_area :text, class: "form-control dm-text-area" %></div>
+      <%= submit_tag "Send DMs to #{@num_follower} followers", class: "btn btn-primary form-control submit-button" %>
+      <button class="btn btn-secondary form-control" type="submit" style="margin-top: 12px;">Send me test DM</button>
+      <% end %>
+    </div>
+<!-- Hi ${follower_name}, pardon the sudden message. I'm contacting to you because I consider moving to XXX for my main publication platform. If you wish to stay touch with me, please provide your email address via ${email_link}. I'll let you know as soon as I'm ready on XXX. If you prefer not to be contacted by me any more, you can opt out from ${optout_link}.  -->
+    <div class="description-wrapper">
+      <h5>How it works?</h5>
+      <p>Twitter can only sends 1000 DMs per day, so we'll use the <a href="/followers">prioritization rules</a> provided you to send our DMs in the priority order</p>
+      <p>
+        Email contains the special link which your follower can use to put email address. 
+        Note <span class="text-info">${follower_name}</span>, <span class="text-info">${email_link}</span>, and <span class="text-info">${optout_link}</span> are the 
+        special placeholder text and will be replaced when we send DM to your followers.
+      </p>
+    </div>
+  </div>
 </div>
-<%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form"} do |f| %>
-  <%= f.text_area :text, :size => "60x12" %>
-  <%= submit_tag "Schedule sending DMs" %>
-<% end %>

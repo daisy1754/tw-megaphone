@@ -1,6 +1,8 @@
 class DmsController < ApplicationController
     def new
         puts params
+        @current_user = current_user
+        @num_follower = UserFollower.where(user_id: current_user.id).count()
     end
 
     def create
