@@ -1,3 +1,39 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.masthead {
+    background-color: #794bc4;
+}
+
+.header-main {
+    padding: 90px;
+}
+
+.tw-sign-in {
+    background-color:#55acee;
+    color: #fff;
+    padding: 16px;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.how-it-works-container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    h4 {
+        padding-bottom: 20px;
+    }
+}
+
+.features-icons-item {
+    margin: 10px;
+    text-align: center;
+}
+
+.icon-wrapper {
+    margin-bottom: 20px;
+    color: #4f0299;
+}

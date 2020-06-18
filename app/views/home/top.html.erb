@@ -1,17 +1,59 @@
-<div style="padding: 20px;">
-    <H2>TW-Megaphone</h2>
-    <h4>We help you send DMs to all of your followers</h4>
-    <div>
-        <%= link_to "Sign in with Twitter", '/auth/twitter', class: "btn" %>
-    </div>
-    <div>
-        <h4>How it works</h4>
-        <div>
-            <ol>
-            <li>Sign in with twitter. We'll automatically download list of all of your followers</li>
-            <li>Define prioriization rule so we know who we should DMs first</li>
-            <li>We'll take care of sending DMs so you can relax (due to limitation of Twitter API, up to 1000 DMs can be sent per day)</li>
-            </ol>
+<div>
+  <header class="masthead text-white text-center masthead">
+    <nav class="navbar navbar-light static-top">
+      <div class="container">
+        <a class="navbar-brand text-white" href="">tw-megaphone</a>
+      </div>
+    </nav>
+    <div class="container header-main">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">Contact all of your followers with ease</h1>
         </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <form>
+            <div class="form-row">
+              <%= link_to '/auth/twitter', class: "tw-sign-in" do %>
+                <i class="fab fa-twitter"></i> Sign in with Twitter
+              <% end %>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
+  </header>
+
+  <section class="how-it-works-container bg-light text-center">
+    <div class="container">
+      <div class="row">
+        <h3>How it works</h3>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="icon-wrapper d-flex justify-content-center">
+              <i class="fab fa-twitter-square fa-6x"></i>
+            </div>
+            <p class="lead mb-0">Sign in with Twitter. We'll automatically download all your follower information</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="icon-wrapper d-flex justify-content-center">
+              <i class="fas fa-sort-amount-up fa-6x"></i>
+            </div>
+            <p class="lead mb-0">Define prioriization rule so we know who we should DMs first</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+            <div class="icon-wrapper d-flex justify-content-center">
+              <i class="far fa-envelope fa-6x"></i>
+            </div>
+            <p class="lead mb-0">We'll take care of sending DMs so you can relax. Recipients can opt-in to provide you email addresses</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
