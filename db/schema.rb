@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_045258) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "has_sent_dm", default: false
     t.string "description"
-    t.decimal "followings_count"
+    t.integer "followings_count"
     t.string "email"
     t.index ["user_id"], name: "index_user_followers_on_user_id"
   end
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_045258) do
     t.string "oauth_secret"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "score_version"
+    t.integer "score_version"
   end
 
 end
