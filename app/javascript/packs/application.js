@@ -3,7 +3,8 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
-require("@rails/ujs").start()
+import Rails from "@rails/ujs"
+Rails.start();
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
@@ -50,15 +51,36 @@ $(document).ready(function() {
       return;
     }
     const type = $(".rule-select").children("option:selected").attr("data-type");
-    let description = $(".rule-select").children("option:selected").attr("data-description");
     const score = ($(".new-rule-score").val() || "").trim();
     const value = ($(".new-rule-value").val() || "").trim();
-    description = description.replace("$score", score).replace("$value", value);
-    console.log(description);
-    $(".rule-group").append($(`<li class='list-group-item d-flex justify-content-between align-items-center w-100 rule-item'>
-      <span>${description}</span>
-        <i class="fa fa-trash text-muted delete-rule"></i>
-      </li>`)); // TODO add id based on server response
-    window.$("#addRuleModal").modal("hide");
+    let description = $(".rule-select").children("option:selected").attr("data-description");
+    description = description.replace("$score", `${score} points`).replace("$value", value);
+    $(".add-rule-modal-body-footer").hide();
+    $(".add-rule-modal-loading").show();
+    const params = {
+      type,
+      description,
+      score,
+      value
+    };
+    Rails.ajax({
+      url: "/rules",
+      type: "post",
+      data: new URLSearchParams(params).toString(),
+      success: function(rule) {
+        $(".add-rule-modal-body-footer").show();
+        $(".add-rule-modal-loading").hide();
+        window.$("#addRuleModal").modal("hide");
+        $(".rule-group").append($(`<li class='list-group-item d-flex justify-content-between align-items-center w-100 rule-item'>
+        <span>${description}</span>
+          <i class="fa fa-trash text-muted delete-rule" data-item-id="${rule.id}"></i>
+        </li>`));
+      },
+      error: function(e) {
+        console.error(e);
+        $(".add-rule-modal-body-footer").show();
+        $(".add-rule-modal-loading").hide();
+      }
+    });
   });
 });

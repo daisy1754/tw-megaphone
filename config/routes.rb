@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     end
   end
   resources :dms, only: [:new, :create, :show]
+  resources :rules, only: [:create, :destroy]
 
   root 'home#top'
 end

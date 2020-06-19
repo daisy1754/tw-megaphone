@@ -2,7 +2,7 @@ class FollowersController < ApplicationController
     def index 
         # TODO check score version
 
-        @rules = Rule.where(user_id: current_user.id).order("created_at desc")
+        @rules = Rule.where(user_id: current_user.id).order("created_at asc")
         @followers = UserFollower.where(user_id: current_user.id).order("score desc").limit(50)
         @current_user = current_user
         @available_rules = Rule.availableRules
