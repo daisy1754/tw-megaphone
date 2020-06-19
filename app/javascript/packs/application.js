@@ -36,7 +36,7 @@ $(document).ready(function() {
     container.append($(element));
   });
 
-  $(".delete-rule").click(function() {
+  $(document).on("click", ".delete-rule", function() {
     const rowToRemove = $(this).closest(".rule-item");
     Rails.ajax({
       url: `/rules/${$(this).attr("data-item-id")}`,
@@ -82,7 +82,7 @@ $(document).ready(function() {
         window.$("#addRuleModal").modal("hide");
         $(".rule-group").append($(`<li class='list-group-item d-flex justify-content-between align-items-center w-100 rule-item'>
         <span>${description}</span>
-          <i class="fa fa-trash text-muted delete-rule" data-item-id="${rule.id}"></i>
+          <i class="fa fa-trash text-muted delete-rule delete-icon" data-item-id="${rule.id}"></i>
         </li>`));
       },
       error: function(e) {
