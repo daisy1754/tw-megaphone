@@ -48,7 +48,9 @@ class SyncFollowersJob < ApplicationJob
             image_url: u["profile_image_url"],
             protected: u["protected"],
             verified: u["verified"],
+            description: u["description"],
             followers_count: u["followers_count"],
+            followers_count: u["friends_count"],
             account_created_at: u["created_at"],
             location: u["location"]
           )
