@@ -27,15 +27,15 @@ class Rule < ApplicationRecord
     when "protected"
       f.protected ? score : 0
     when "description_contains"
-      f.description.includes?(value) ? score : 0
+      (f.description || "").include?(value) ? score : 0
     when "location_contains"
-      f.location.includes?(value) ? score : 0
+      (f.location || "").include?(value) ? score : 0
     when "followers"
       return 0 if value == 0
-      (f.num_followers / value).round * score
+      (f.followers_count / value.to_i).round * score
     when "followings"
       return 0 if value == 0
-      (f.num_followings / value).round * score
+      (f.followings_count / value.to_i).round * score
     else
       raise "unknown type #{self[:rule_type]}"
     end
