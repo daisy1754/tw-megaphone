@@ -13,6 +13,11 @@ class Rule < ApplicationRecord
     ]
   end
 
+  def description
+    config = self.class.availableRules.select{|r| r[:type] == self[:rule_type]}.first
+    config[:description].sub("$score", "#{self[:score]} points").sub("$value", self[:value].to_s)
+  end
+
   def calculate_score(f)
     score = self[:score]
     value = self[:value]
