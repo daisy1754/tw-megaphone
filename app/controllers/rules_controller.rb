@@ -10,5 +10,7 @@ class RulesController < ApplicationController
     end
     
     def destroy
+        Rule.find_by(id: params["id"], user_id: current_user.id).delete()
+        render json: { success: true }
     end
 end

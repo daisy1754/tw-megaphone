@@ -37,8 +37,17 @@ $(document).ready(function() {
   });
 
   $(".delete-rule").click(function() {
-    console.log($(this).attr("data-item-id")); // TODO ajax call to delete this
-    $(this).closest(".rule-item").remove();
+    const rowToRemove = $(this).closest(".rule-item");
+    Rails.ajax({
+      url: `/rules/${$(this).attr("data-item-id")}`,
+      type: "delete",
+      success: function(rule) {
+        rowToRemove.remove();
+      },
+      error: function(e) {
+        console.error(e);
+      }
+    });
   });
 
   $(".add-rule-confirm").click(function() {
