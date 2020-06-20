@@ -1,0 +1,33 @@
+class EmailsController < ApplicationController
+    def show
+        id = params["id"]
+        if id.start_with? "test-"
+            uid = id["test-".size, id.size]
+            @u = User.find_by_uid!(uid)
+        else
+            @f = UserFollower.find_by_random_slug!(id)
+            @u = User.find(@f.user_id)
+        end
+    end
+
+    def save
+        email = params["email"]
+        slug = params["slug"]
+        if slug.start_with? "test-"
+            return
+        end
+        if email.length < 3 then
+            render json: { error: "too short" }, :status => 422
+            return
+        end
+
+        f = UserFollower.find_by_random_slug!(slug)
+        f.email = email
+        f.save!
+        render json: { saved: true }
+    end
+
+    def optout
+        render json: { ok: "ok" }
+    end
+end

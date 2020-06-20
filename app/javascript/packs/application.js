@@ -24,9 +24,13 @@ import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 import '../src/application.scss'
 
+function hideAndShow(toHideSelector, toShowSelector) {
+  $(toHideSelector).hide();
+  $(toShowSelector).show();
+}
+
 function pollForRerankProgress() {
-  $(".followers").hide();
-  $(".load-follower-spinner").show();
+  hideAndShow(".followers", ".load-follower-spinner");
   Rails.ajax({
     url: `/followers/ranking_progress`,
     type: "get",
@@ -216,6 +220,32 @@ $(document).ready(function() {
         window.jquery(".toast").toast('show')
         $(".send-test-dm-spinner").hide();
         $(".send-test-dm-text").show();
+      }
+    });
+  });
+
+  /* -- email optin --*/
+  $(".submit-email").click(function() {
+    hideAndShow(".submit-email-text", ".submit-email-spinner");
+    $(".error-msg").hide();
+    const split = location.pathname.split("/");
+    const params = {
+      email: $("#email").val(),
+      slug: split[split.length - 1]
+    };
+    Rails.ajax({
+      url: `/emails/${params.slug}/save`,
+      type: "post",
+      data: new URLSearchParams(params).toString(),
+      success: function(response) {
+        console.log(response);
+        hideAndShow(".form-wrapper", ".thank-you");
+      },
+      error: function(e) {
+        console.error(e);
+        $(".error-msg").text("failed to save");
+        $(".error-msg").show();
+        hideAndShow(".submit-email-spinner", ".submit-email-text");
       }
     });
   });

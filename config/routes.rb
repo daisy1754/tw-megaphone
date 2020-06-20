@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     end
   end
   resources :rules, only: [:create, :destroy]
+  resources :emails, only: [:show] do
+    get :optout
+    post :save
+  end
 
   root 'home#top'
 end

@@ -1,0 +1,26 @@
+<div class="bg-light" style="padding: 40px;">
+  <div class="container">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <h5 class="border-bottom border-gray pb-2 mb-0">Provide your email address to <%= @u.user_name %></h5>
+      <div class="row justify-content-center form-wrapper">
+        <div class="col-10">
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email">
+            </div>
+            <div class="error-msg text-danger"></div>
+            <span class="btn btn-primary form-control submit-email" style="margin-top: 12px; margin-bottom: 12px;" href="#">
+                <span class="submit-email-spinner" style="display:none">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Loading...</span>
+                </span>
+                <span class="submit-email-text">Submit</span>
+            </span>
+        </div>
+      </div>
+      <div class="justify-content-center thank-you" style="display:none;">
+        <h5>Thank you, your email was recorded</h5>
+      </div>
+    </div>
+  </div>
+</div>
