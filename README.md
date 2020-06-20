@@ -8,7 +8,17 @@
 
 ## Setup instruction
 ### running locally
-TODO
+Requirement: Ruby (tested on Ruby 2.7.1)
+
+Create Twitter app from https://developer.twitter.com/en/apps 
+Enable signin with twitter and DM permission
+Create .env file with `API_KEY` and `API_SECRET`
+
+```
+bundle install
+rake db:migrate
+rails s
+```
 
 ### deploying on heroku
 TODO
