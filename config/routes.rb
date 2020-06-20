@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       get :search
       get :list
+      get :sync_progress
       get :ranking_progress
     end
   end

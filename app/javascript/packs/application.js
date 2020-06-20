@@ -72,6 +72,31 @@ function pollForRerankProgress() {
   });
 }
 
+function pollForFolloweSync() {
+  Rails.ajax({
+    url: `/followers/sync_progress`,
+    type: "get",
+    success: function(response) {
+      console.log(response);
+      if (response.completed) {
+        location.reload();
+      } else {
+        let progressText = "";
+        if (response.num_all_followers && response.num_all_followers > 0 && response.num_synced > 0) {
+          progressText = ` (${response.num_synced} / ${response.num_all_followers })`
+        }
+        const text = `Downloading your follower list from Twitter${progressText}...\n
+          If you have many followers, please come back later. We can only sync 20K accounts per hour`;
+        $(".sync-follower-progress").text(text);
+        setTimeout(pollForFolloweSync, 1000);
+      }
+    },
+    error: function(e) {
+      console.error(e);
+    }
+  });
+}
+
 $(document).ready(function() {
   $(".rule-select").change(function() {
     const container = $(".rule-details-input-area");
@@ -144,6 +169,10 @@ $(document).ready(function() {
   });
 
   if (location.pathname === "/followers") {
-    pollForRerankProgress();
+    if ($(".followers").length > 0) {
+      pollForRerankProgress();
+    } else {
+      pollForFolloweSync();
+    }
   }
 });

@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
     def create
       user = User.find_or_create_from_auth(request.env['omniauth.auth'])
+      user.score_version = 0
+      user.save
       session[:user_id] = user.id
       flash[:notice] = "successfully authenticated"
       UserFollowerImport.create(user_id: user.id)

@@ -1,11 +1,12 @@
 class FollowersController < ApplicationController
     def index 
-        # TODO check score version
-
-        @rules = Rule.where(user_id: current_user.id).order("created_at asc")
-        @followers = UserFollower.where(user_id: current_user.id).order("score desc").limit(50)
         @current_user = current_user
-        @available_rules = Rule.availableRules
+        @import_completed = UserFollowerImport.find_by_user_id(current_user.id).completed
+        if @import_completed then
+            @rules = Rule.where(user_id: current_user.id).order("created_at asc")
+            @followers = UserFollower.where(user_id: current_user.id).order("score desc").limit(50)
+            @available_rules = Rule.availableRules
+        end
     end
 
     def search
@@ -20,6 +21,15 @@ class FollowersController < ApplicationController
     def list
         followers = UserFollower.where(user_id: current_user.id).order("score desc").limit(50)
         render json: { followers: followers }
+    end
+
+    def sync_progress
+        import = UserFollowerImport.find_by_user_id(current_user.id)
+        render json: {
+            completed: import.completed,
+            num_all_followers: import.num_all_followers,
+            num_synced: import.num_synced
+        }
     end
 
     def ranking_progress

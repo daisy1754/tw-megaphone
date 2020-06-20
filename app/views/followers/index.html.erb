@@ -7,7 +7,7 @@
       </div>
     </nav>
   </header>
-
+<% if @import_completed then %>
   <main role="main" class="container">
     <div class="my-3 p-3 bg-white rounded box-shadow">
       <h5 class="border-bottom border-gray pb-2 mb-0">Ranking rules</h5>
@@ -30,17 +30,18 @@
       <div class="load-follower-spinner" style="display: none;">
         <div class="d-flex flex-column align-items-center justify-content-center">
           <div class="row">
-              <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
-              </div>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
-            <div class="rerank-progress">
-              Updating...
-            </div>
+          </div>
+          <div class="rerank-progress">
+            Updating...
+          </div>
         </div>
+      </div>
     </div>
   </main>
-
+ 
   <!-- Modal -->
   <div class="modal fade" id="addRuleModal" tabindex="-1" role="dialog" aria-labelledby="addRuleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -77,5 +78,21 @@
       </div>
     </div>
   </div>
+<% else %>
+  <main role="main" class="container sync-follower">
+    <div class="sync-follower-spinner">
+      <div class="d-flex flex-column align-items-center justify-content-center" style="height: 100%">
+        <div class="row">
+          <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="sync-follower-progress">
+          Downloading your follower list from Twitter...
+        </div>
+      </div>
+    </div>
+  </main>
+<% end %>
 </div>
 

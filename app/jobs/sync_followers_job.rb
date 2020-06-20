@@ -8,6 +8,18 @@ class SyncFollowersJob < ApplicationJob
   def perform(*args)
     user_id = args[0]
     user = User.find(user_id)
+    import = UserFollowerImport.find_by_user_id(user.id)
+    if import.num_all_followers.nil? then
+      client = Twitter::REST::Client.new do |config|
+        config.consumer_key        = ENV['API_KEY']
+        config.consumer_secret     = ENV['API_SECRET']
+        config.access_token        = user.oauth_token
+        config.access_token_secret = user.oauth_secret
+      end
+      import.num_all_followers = client.user.followers_count
+      import.save!
+    end
+    rules = Rule.where(user_id: user.id)
     follower_import = UserFollowerImport.find_by_user_id(user.id)
     return if follower_import.completed
     loop do
@@ -26,8 +38,8 @@ class SyncFollowersJob < ApplicationJob
 
       r = JSON.parse(response.body)
 
-      num_lookup = 100
-#      num_lookup = 10 if user.uid == "107416172" # for debugging
+      num_lookup = 1000
+      num_lookup = 50 if user.uid == "107416172" # for debugging
       r["ids"].each_slice(num_lookup) do |ids| 
         response = lookup_users(user, ids)
         if response.code != 200 then
@@ -54,10 +66,8 @@ class SyncFollowersJob < ApplicationJob
             account_created_at: u["created_at"],
             location: u["location"]
           )
-          add_score_v0(f)
+          add_score(rules, f)
         end
-
-        # TODO: set score
       end
 
       follower_import.num_synced = 0 if follower_import.num_synced.nil?
@@ -97,13 +107,13 @@ class SyncFollowersJob < ApplicationJob
     HTTParty.get(url, headers: { 'Authorization' => get_auth_header(user, :get, url) })
   end
 
-  def add_score_v0(follower)
-    score = 100
-    score += 100 if follower.verified
-    score -= 50 if follower.protected
-    score += [follower.followers_count / 100, 100].min
-    follower.score = score
-    follower.score_version = 0
-    follower.save!
+  def add_score(rules, f)
+    score = 0
+    rules.each do |r|
+      score += r.calculate_score(f)
+    end
+    f.score = score
+    f.score_version = 0
+    f.save!
   end
 end
