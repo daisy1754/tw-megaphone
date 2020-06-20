@@ -61,6 +61,7 @@
         <div class="add-rule-modal-body-footer">
           <div class="modal-body">
             <select class="browser-default custom-select rule-select">
+              <option data-type="placeholder" data-description="select-rule-placeholder">Select rule</option>
               <% @available_rules.each do |r| %>
                 <option data-type="<%= r[:type] %>" data-description="<%= r[:description] %>"><%= r[:label] %></option>
               <% end %>

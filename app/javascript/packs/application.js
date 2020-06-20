@@ -102,9 +102,15 @@ $(document).ready(function() {
     const container = $(".rule-details-input-area");
     container.empty();
 
+    const type = $(this).children("option:selected").attr("data-type");
+    if (type === "placeholder") {
+      console.log("ignore click for placeholder");
+      return;
+    }
+
     const description = $(this).children("option:selected").attr("data-description");
     const element = `<div>${description}</div>`
-      .replace("$score", "<input class='form-control new-rule-score'></input> points ")
+      .replace("$score", "<input class='form-control new-rule-score' type='number'></input> points ")
       .replace("$value", "<input class='form-control new-rule-value'></input>");
     container.append($(element));
   });
@@ -134,6 +140,10 @@ $(document).ready(function() {
       return;
     }
     const type = $(".rule-select").children("option:selected").attr("data-type");
+    if (type === "placeholder") {
+      console.log("ignore click for placeholder");
+      return;
+    }
     const score = ($(".new-rule-score").val() || "").trim();
     const value = ($(".new-rule-value").val() || "").trim();
     let description = $(".rule-select").children("option:selected").attr("data-description");
