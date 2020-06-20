@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :followers, only: [:index] do
     collection do
       get :search
+      get :list
+      get :ranking_progress
     end
   end
   resources :dms, only: [:new, :create, :show]

@@ -25,18 +25,19 @@
 
     <div class="my-5 p-3 bg-white rounded box-shadow">
       <h6 class="border-bottom border-gray pb-2 mb-0">Based on your rule above, here is top 50 followers</h6>
-      <% @followers.each do |f| %>
-      <div class="media text-muted pt-3">
-        <img src="<%= f.image_url %>" data-holder-rendered="true" class="mr-2 rounded follower-icon" >
-        <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <div class="d-flex justify-content-between align-items-center w-100">
-            <strong class="text-gray-dark"><%= f.name %></strong>
-            <span>Score: <%= f.score %></span>
-          </div>
-          <span class="d-block">@<%= f.screen_name %></span>
-        </div>
+      <div class="followers">
       </div>
-      <% end %>
+      <div class="load-follower-spinner" style="display: none;">
+        <div class="d-flex flex-column align-items-center justify-content-center">
+          <div class="row">
+              <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div class="rerank-progress">
+              Updating...
+            </div>
+        </div>
     </div>
   </main>
 

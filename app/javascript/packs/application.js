@@ -24,6 +24,54 @@ import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 import '../src/application.scss'
 
+function pollForRerankProgress() {
+  $(".followers").hide();
+  $(".load-follower-spinner").show();
+  Rails.ajax({
+    url: `/followers/ranking_progress`,
+    type: "get",
+    success: function(progress) {
+      if (progress.num_followers === progress.num_followers_with_latest_score) {
+        Rails.ajax({
+          url: `/followers/list`,
+          type: "get",
+          success: function(response) {
+            const container = $(".followers");
+            container.empty();
+            for (let i = 0; i < response.followers.length; i++) {
+              const f = response.followers[i];
+              container.append($(`
+                <div class="media text-muted pt-3">
+                  <img src="${f.image_url}" data-holder-rendered="true" class="mr-2 rounded follower-icon" >
+                  <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                      <strong class="text-gray-dark">${f.name}</strong>
+                      <span>Score: ${f.score}</span>
+                    </div>
+                    <span class="d-block">@${f.screen_name}</span>
+                  </div>
+                </div>`));
+            }
+          },
+          error: function(e) {
+            console.error(e);
+          }
+        });
+        $(".followers").show();
+        $(".load-follower-spinner").hide();
+      } else {
+        const progressText = progress.num_followers_with_latest_score > 0 ? ` (${progress.num_followers_with_latest_score} / ${progress.num_followers})` : "";
+        const text = `reordering your followers${progressText}...`;
+        $(".rerank-progress").text(text);
+        setTimeout(pollForRerankProgress, 1000);
+      }
+    },
+    error: function(e) {
+      console.error(e);
+    }
+  });
+}
+
 $(document).ready(function() {
   $(".rule-select").change(function() {
     const container = $(".rule-details-input-area");
@@ -43,6 +91,7 @@ $(document).ready(function() {
       type: "delete",
       success: function(rule) {
         rowToRemove.remove();
+        pollForRerankProgress();
       },
       error: function(e) {
         console.error(e);
@@ -84,6 +133,7 @@ $(document).ready(function() {
         <span>${description}</span>
           <i class="fa fa-trash text-muted delete-rule delete-icon" data-item-id="${rule.id}"></i>
         </li>`));
+        pollForRerankProgress();
       },
       error: function(e) {
         console.error(e);
@@ -92,4 +142,8 @@ $(document).ready(function() {
       }
     });
   });
+
+  if (location.pathname === "/followers") {
+    pollForRerankProgress();
+  }
 });
