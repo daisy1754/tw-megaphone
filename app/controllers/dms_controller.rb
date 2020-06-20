@@ -16,4 +16,24 @@ class DmsController < ApplicationController
     def show
         
     end
+
+    def send_me
+        text = params["text"].sub("${follower_name}", current_user.user_name)
+        text = text.sub("${email_link}", "TODO link")
+        text = text.sub("${optout_link}", "TODO link")
+
+        client = Twitter::REST::Client.new do |config|
+            config.consumer_key        = ENV['API_KEY']
+            config.consumer_secret     = ENV['API_SECRET']
+            config.access_token        = ENV['ACCESS_TOKEN_FOR_TEST_DM']
+            config.access_token_secret = ENV['ACCESS_TOKEN_SECRET_FOR_TEST_DM']
+        end
+      
+        begin
+            client.create_direct_message(current_user.uid.to_i, text)
+            render json: { sent: true }
+        rescue Twitter::Error::TooManyRequests => error
+            render json: { rate_limit: true }
+        end
+    end
 end

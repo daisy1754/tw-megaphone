@@ -18,7 +18,13 @@
         <%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form form-group col-10"} do |f| %>
         <div><%= f.text_area :text, class: "form-control dm-text-area", value: @prefill %></div>
         <%= submit_tag "Send DMs to #{@num_follower} followers", class: "btn btn-primary form-control submit-button" %>
-        <button class="btn btn-secondary form-control" type="submit" style="margin-top: 12px;">Send me test DM</button>
+        <span class="btn btn-secondary form-control send-test-dm" style="margin-top: 12px;" href="#">
+          <span class="send-test-dm-spinner" style="display:none">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="sr-only">Loading...</span>
+          </span>
+          <span class="send-test-dm-text">Send me test DM</span>
+        </span>
         <% end %>
       </div>
     </div>

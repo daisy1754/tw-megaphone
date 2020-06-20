@@ -175,4 +175,28 @@ $(document).ready(function() {
       pollForFolloweSync();
     }
   }
+
+  /* -- dms/new --- */
+  $(".send-test-dm").click(function() {
+    $(".send-test-dm-spinner").show();
+    $(".send-test-dm-text").hide();
+    const params = {
+      text: $(".dm-text-area").val()
+    };
+    Rails.ajax({
+      url: "/dms/send_me",
+      type: "post",
+      data: new URLSearchParams(params).toString(),
+      success: function(response) {
+        console.log(response);
+        $(".send-test-dm-spinner").hide();
+        $(".send-test-dm-text").show();
+      },
+      error: function(e) {
+        console.error(e);
+        $(".send-test-dm-spinner").hide();
+        $(".send-test-dm-text").show();
+      }
+    });
+  });
 });

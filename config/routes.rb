@@ -9,7 +9,11 @@ Rails.application.routes.draw do
       get :ranking_progress
     end
   end
-  resources :dms, only: [:new, :create, :show]
+  resources :dms, only: [:new, :create, :show] do
+    collection do
+      post :send_me
+    end
+  end
   resources :rules, only: [:create, :destroy]
 
   root 'home#top'
