@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_19_045258) do
+ActiveRecord::Schema.define(version: 2020_06_20_054739) do
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 2020_06_19_045258) do
     t.string "description"
     t.integer "followings_count"
     t.string "email"
+    t.string "random_slug"
+    t.index ["random_slug"], name: "index_user_followers_on_random_slug"
     t.index ["user_id"], name: "index_user_followers_on_user_id"
   end
 
