@@ -16,13 +16,12 @@
       <h5 class="border-bottom border-gray pb-2 mb-0">Draft your direct message to followers</h5>
       <div class="row justify-content-center form-wrapper">
         <%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form form-group col-10"} do |f| %>
-        <div><%= f.text_area :text, class: "form-control dm-text-area" %></div>
+        <div><%= f.text_area :text, class: "form-control dm-text-area", value: @prefill %></div>
         <%= submit_tag "Send DMs to #{@num_follower} followers", class: "btn btn-primary form-control submit-button" %>
         <button class="btn btn-secondary form-control" type="submit" style="margin-top: 12px;">Send me test DM</button>
         <% end %>
       </div>
     </div>
-<!-- Hi ${follower_name}, pardon the sudden message. I'm contacting to you because I consider moving to XXX for my main publication platform. If you wish to stay touch with me, please provide your email address via ${email_link}. I'll let you know as soon as I'm ready on XXX. If you prefer not to be contacted by me any more, you can opt out from ${optout_link}.  -->
 
     <div class="p-3 bg-white rounded box-shadow description-wrapper">
       <h5 class="border-bottom border-gray pb-2 mb-0">How it works?</h5>
