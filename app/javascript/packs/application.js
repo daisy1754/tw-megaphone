@@ -189,11 +189,21 @@ $(document).ready(function() {
       data: new URLSearchParams(params).toString(),
       success: function(response) {
         console.log(response);
+        console.log(response.sent);
+        if (response.sent) {
+          $(".toast-body").text("message sent successfully");
+          window.jquery(".toast").toast('show');
+        } else if (response.rate_limit) {
+          $(".toast-body").text("failed to send message - API rate limit");
+          window.jquery(".toast").toast('show')
+        }
         $(".send-test-dm-spinner").hide();
         $(".send-test-dm-text").show();
       },
       error: function(e) {
         console.error(e);
+        $(".toast-body").text("failed to send message");
+        window.jquery(".toast").toast('show')
         $(".send-test-dm-spinner").hide();
         $(".send-test-dm-text").show();
       }
