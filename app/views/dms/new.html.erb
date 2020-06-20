@@ -3,7 +3,10 @@
     <nav class="navbar navbar-light static-top">
       <div class="container">
         <span class="navbar-brand text-white" href="">tw-megaphone</span>
-        <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+        <span>
+          <a href="/followers" class="text-white" style="margin-right: 30px">followers</a>
+          <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+        </span>
       </div>
     </nav>
   </header>

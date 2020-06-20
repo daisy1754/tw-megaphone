@@ -3,7 +3,10 @@
     <nav class="navbar navbar-light static-top">
       <div class="container">
         <span class="navbar-brand text-white" href="">tw-megaphone</span>
-        <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+        <span>
+          <a href="/dms/new" class="text-white" style="margin-right: 30px">new DM</a>
+          <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+        </span>
       </div>
     </nav>
   </header>
@@ -20,7 +23,10 @@
           </li>
         <% end %>
       </ul>
-      <button class="btn btn-primary add-new-rule" style="margin-top: 12px;" data-toggle="modal" data-target="#addRuleModal">Add new rule</button>
+      <div class="d-flex justify-content-between" style="margin-top: 12px;">
+        <button class="btn btn-primary add-new-rule" data-toggle="modal" data-target="#addRuleModal">Add new rule</button>
+        <a class="btn btn-success new-dm text-white" href="/dms/new">Draft a new DM</a>
+      </div>
     </div>
 
     <div class="my-5 p-3 bg-white rounded box-shadow">
