@@ -293,4 +293,31 @@ $(document).ready(function() {
       }
     });
   });
+
+  if (location.pathname.indexOf("/exports/") === 0) {
+    function pollForExport() {
+      const id = location.pathname.substring("/exports/".length);
+      Rails.ajax({
+        url: `/exports/${id}/status`,
+        type: "get",
+        success: function(response) {
+          console.log(response);
+          if (response.completed) {
+            $(".export-progress").text("");
+            location.href = response.download_url;
+          } else if (response.current > 0) {
+            $(".export-progress").text(`processed ${response.current} followers out of ${response.total}...`);
+            setTimeout(pollForExport, 2000);
+          } else {
+            setTimeout(pollForExport, 2000);
+          }
+        },
+        error: function(e) {
+          console.error(e);
+          setTimeout(pollForExport, 2000);
+        }
+      });
+    }
+    pollForExport();
+  }
 });

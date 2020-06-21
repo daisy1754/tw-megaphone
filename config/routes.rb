@@ -20,7 +20,9 @@ Rails.application.routes.draw do
     get :optout
     post :save
   end
-  resources :exports, only: [:show]
+  resources :exports, only: [:show]do
+    get :status
+  end
 
   root 'home#top'
 end
