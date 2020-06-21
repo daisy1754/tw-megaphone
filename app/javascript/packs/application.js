@@ -191,6 +191,25 @@ $(document).ready(function() {
   }
 
   /* -- dms/new --- */
+  $(".send-dm-confirm-btn").click(function() {
+    hideAndShow(".submit-confirm", ".confirm-spinner");
+    $(".cancel-btn").hide();
+    const params = {
+      text: $(".dm-text-area").val()
+    };
+    Rails.ajax({
+      url: "/dms",
+      type: "post",
+      data: new URLSearchParams(params).toString(),
+      success: function(response) {
+        console.log(response);
+        location.href = `/dms/${response.id}`;
+      },
+      error: function(e) {
+        console.error(e);
+      }
+    });
+  });
   $(".send-test-dm").click(function() {
     $(".send-test-dm-spinner").show();
     $(".send-test-dm-text").hide();

@@ -28,8 +28,10 @@
       <div class="row justify-content-center form-wrapper">
         <%= form_for :dm, :url => { :action => "create" }, :html => {:class => "dm-form form-group col-10"} do |f| %>
         <div><%= f.text_area :text, class: "form-control dm-text-area", value: @prefill %></div>
-        <%= submit_tag "Send DMs to #{@num_follower} followers", class: "btn btn-primary form-control submit-button" %>
-        <span class="btn btn-secondary form-control send-test-dm" style="margin-top: 12px;" href="#">
+        <span class="btn btn-primary form-control dm-submit-button" data-toggle="modal" data-target="#submitConfirmationModal">
+          Send DMs to <%= @num_follower %> followers
+        </span>
+        <span class="btn btn-secondary form-control send-test-dm" style="margin-top: 12px;">
           <span class="send-test-dm-spinner" style="display:none">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             <span class="sr-only">Loading...</span>
@@ -52,6 +54,34 @@
         <p>Preview <a href="<%= @email_link %>" target="_blank">${email_link}</a> or <a href="<%= @optout_link %>" target="_blank">${optout_link}</a> (open in new tab).
         </p>
         <p></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="submitConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="add-rule-modal-body-footer">
+          <div class="modal-body">
+            <p>This will trigger DMs to all of your <%= @num_follower %> followers. We'll send 1000 DMs per day. This action cannot be undone.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary cancel-btn" data-dismiss="modal">Cancel</button>
+            <span class="btn btn-primary send-dm-confirm-btn">
+                <span class="confirm-spinner" style="display:none">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="sr-only">Loading...</span>
+                </span>
+                <span class="submit-confirm">Confirm</span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
