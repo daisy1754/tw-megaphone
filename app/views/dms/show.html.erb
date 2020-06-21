@@ -15,8 +15,21 @@
       <p>We're sending DMs to your <%= @num_followers %> followers. 
       <%= @num_sent %> messages has been sent so far and <%= @num_email %> emails have been provided to tw-megaphone.</p>
       <p>You can bookmark this page to see the progress.</p>
-      <p><a href="#">Export all followers data as CSV (<%= @num_followers %> rows)</a></p>
-      <p><a href="#">Export followers with email data as CSV (<%= @num_email %> rows)</a></p>
+      <% ["full", "email"].each do |type| %>
+      <p><span class="btn btn-secondary export-<%= type %>">
+        <span class="export-<%= type %>-spinner" style="display:none">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="sr-only">Loading...</span>
+        </span>
+        <span class="export-<%= type %>-text">
+          <% if type=="full" then %>
+          Export all followers data as CSV (<%= @num_followers %> rows)
+          <% else %>
+          Export followers with email data as CSV (<%= @num_email %> rows)
+          <% end %>
+        </span>
+      </span></p>
+      <% end %>
     </div>
   </main>
 </div>

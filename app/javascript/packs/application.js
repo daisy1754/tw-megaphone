@@ -17,7 +17,7 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import jquery from 'jquery';
+import jquery, { type } from 'jquery';
 window.$ = window.jquery = jquery;
 
 import 'bootstrap'
@@ -243,6 +243,31 @@ $(document).ready(function() {
     });
   });
 
+  /* -- dms/show --- */
+  function exportData(type) {
+    hideAndShow(`.export-${type}-text`, `.export-${type}-spinner`);
+    const params = {
+      type: type,
+    };
+    Rails.ajax({
+      url: "/followers/export",
+      type: "post",
+      data: new URLSearchParams(params).toString(),
+      success: function(response) {
+        location.href = `/exports/${response.id}`;
+      },
+      error: function(e) {
+        console.error(e);
+      }
+    });
+  }
+  $(".export-full").click(function() {
+    exportData("full");
+  });
+  $(".export-email").click(function() {
+    exportData("email");
+  });
+  
   /* -- email optin --*/
   $(".submit-email").click(function() {
     hideAndShow(".submit-email-text", ".submit-email-spinner");
