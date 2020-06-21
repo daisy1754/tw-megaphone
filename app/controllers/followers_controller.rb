@@ -41,4 +41,22 @@ class FollowersController < ApplicationController
             num_followers_with_latest_score: num_followers_with_latest_score,
         }
     end
+
+    def export
+        type = params["type"]
+        total = 0
+        if type == "email" then
+            total = UserFollower.where(user_id: current_user.id).where.not('email' => nil).count()
+        else
+            total = UserFollower.where(user_id: current_user.id, optout: false).count()
+        end
+        export = Export.create!(
+            user_id: current_user.id,
+            file_name: "#{current_user.id}_#{type}_#{Time.now.to_i}.csv",
+            num_items: total,
+            num_current: 0
+        )
+        ExportJob.perform_later(current_user.id, export.id, type)
+        render json: { id: export.id }
+    end
 end

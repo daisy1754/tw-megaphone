@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :list
       get :sync_progress
       get :ranking_progress
+      post :export
     end
   end
   resources :dms, only: [:new, :create, :show] do
