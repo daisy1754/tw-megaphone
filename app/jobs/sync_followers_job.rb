@@ -38,7 +38,7 @@ class SyncFollowersJob < ApplicationJob
 
       r = JSON.parse(response.body)
 
-      num_lookup = 1000
+      num_lookup = 100
       num_lookup = 50 if user.uid == "107416172" # for debugging
       r["ids"].each_slice(num_lookup) do |ids| 
         response = lookup_users(user, ids)
