@@ -43,12 +43,15 @@
     <div class="p-3 bg-white rounded box-shadow description-wrapper">
       <h5 class="border-bottom border-gray pb-2 mb-0">How it works?</h5>
       <div class="how-it-works-body">
-        <p>Twitter can only sends 1000 DMs per day, so we'll use the <a href="/followers">prioritization rules</a> provided you to send our DMs in the priority order</p>
+        <p>Twitter can only sends 1000 DMs per day, so we'll use the <a href="/followers">prioritization rules</a> provided you to send our DMs in the priority order.</p>
         <p>
           Email contains the special link which your follower can use to put email address. 
           Note <span class="text-info">${follower_name}</span>, <span class="text-info">${email_link}</span>, and <span class="text-info">${optout_link}</span> are the 
           special placeholder text and will be replaced when we send DM to your followers.
         </p>
+        <p>Preview <a href="<%= @email_link %>" target="_blank">${email_link}</a> or <a href="<%= @optout_link %>" target="_blank">${optout_link}</a> (open in new tab).
+        </p>
+        <p></p>
       </div>
     </div>
   </div>
