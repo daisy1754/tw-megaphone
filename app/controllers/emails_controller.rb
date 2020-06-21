@@ -13,11 +13,12 @@ class EmailsController < ApplicationController
     def save
         email = params["email"]
         slug = params["slug"]
-        if slug.start_with? "test-"
-            return
-        end
         if email.length < 3 then
             render json: { error: "too short" }, :status => 422
+            return
+        end
+
+        if slug.start_with? "test-"
             return
         end
 
