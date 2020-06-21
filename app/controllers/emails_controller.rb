@@ -28,6 +28,13 @@ class EmailsController < ApplicationController
     end
 
     def optout
-        render json: { ok: "ok" }
+        id = params["email_id"]
+        if id.start_with? "test-"
+            puts "test"
+        else
+            f = UserFollower.find_by_random_slug!(id)
+            f.optout = true
+            f.save!
+        end
     end
 end
