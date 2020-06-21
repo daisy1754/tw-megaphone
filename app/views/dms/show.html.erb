@@ -1,7 +1,22 @@
-<div>
-<p>We're sending DM to your <%= @num_followers %> followers please hang tight.</p>
-<p><%= @num_sent %> messages has been sent so far.</p>
-<p>You can bookmark this page to see the progress</p>
-
-TODO: You can search your followers below to see if message has been sent to these people
+<div class="bg-light" style="padding-bottom: 40px;">
+  <header class="masthead text-white text-center masthead">
+    <nav class="navbar navbar-light static-top">
+      <div class="container">
+        <span class="navbar-brand text-white" href="">tw-megaphone</span>
+        <span>
+          <a href="/followers" class="text-white" style="margin-right: 30px">followers</a>
+          <img src="<%= @current_user.image_url %>" class="header-avatar rounded" />
+        </span>
+      </div>
+    </nav>
+  </header>
+  <main role="main" class="container">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+      <p>We're sending DMs to your <%= @num_followers %> followers. 
+      <%= @num_sent %> messages has been sent so far and <%= @num_email %> emails have been provided to tw-megaphone.</p>
+      <p>You can bookmark this page to see the progress.</p>
+      <p><a href="#">Export all followers data as CSV (<%= @num_followers %> rows)</a></p>
+      <p><a href="#">Export followers with email data as CSV (<%= @num_email %> rows)</a></p>
+    </div>
+  </main>
 </div>

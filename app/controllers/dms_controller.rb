@@ -16,7 +16,11 @@ class DmsController < ApplicationController
     end
 
     def show
-        
+        @current_user = current_user
+
+        @num_followers = UserFollower.where(user_id: current_user.id, optout: false).count()
+        @num_sent = UserFollower.where(user_id: current_user.id, optout: false, has_sent_dm: true).count()
+        @num_email = UserFollower.where(user_id: current_user.id).where.not('email' => nil).count()
     end
 
     def send_me
