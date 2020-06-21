@@ -12,7 +12,7 @@ Requirement: Ruby (tested on Ruby 2.7.1)
 
 Create Twitter app from https://developer.twitter.com/en/apps 
 Enable signin with twitter and DM permission
-Create .env file with `API_KEY` and `API_SECRET`
+Create .env file with appropriate secrets - see .env.sample
 
 ```
 bundle install
