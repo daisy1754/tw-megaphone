@@ -66,3 +66,4 @@ gem 'delayed_job_active_record'
 gem "daemons" 
 gem "aws-sdk-s3"
 gem "csv"
+gem "kaminari"
