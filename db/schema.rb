@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_06_21_050805) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -29,14 +32,14 @@ ActiveRecord::Schema.define(version: 2020_06_21_050805) do
 
   create_table "dms", force: :cascade do |t|
     t.string "content"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_dms_on_user_id"
   end
 
   create_table "exports", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "file_name"
     t.integer "num_items"
     t.integer "num_current", default: 0
@@ -50,7 +53,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_050805) do
     t.string "rule_type"
     t.string "value"
     t.integer "score"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_rules_on_user_id"
@@ -61,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_050805) do
     t.integer "num_synced"
     t.string "next_cursor"
     t.boolean "completed"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_user_follower_imports_on_user_id"
@@ -79,7 +82,7 @@ ActiveRecord::Schema.define(version: 2020_06_21_050805) do
     t.string "location"
     t.integer "score"
     t.integer "score_version"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "has_sent_dm", default: false

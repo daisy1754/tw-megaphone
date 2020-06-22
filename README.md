@@ -8,7 +8,7 @@
 
 ## Setup instruction
 ### running locally
-Requirement: Ruby (tested on Ruby 2.7.1)
+Requirement: Ruby (tested on Ruby 2.7.1) and postgres.
 
 Create Twitter app from https://developer.twitter.com/en/apps 
 Enable signin with twitter and DM permission
