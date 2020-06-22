@@ -1,4 +1,6 @@
 class EmailsController < ApplicationController
+    skip_before_action :authenticate!
+
     def show
         id = params["id"]
         if id.start_with? "test-"

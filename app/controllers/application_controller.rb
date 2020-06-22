@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    before_action :authenticate!
     protect_from_forgery with: :exception
     helper_method :current_user, :logged_in?
   
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
       !!session[:user_id]
     end
   
-    def authenticate
+    def authenticate!
       return if logged_in?
       redirect_to root_path, alert: "login required"
     end
