@@ -62,7 +62,7 @@ class SyncFollowersJob < ApplicationJob
             verified: u["verified"],
             description: u["description"],
             followers_count: u["followers_count"],
-            followers_count: u["friends_count"],
+            followings_count: u["friends_count"],
             account_created_at: u["created_at"],
             location: u["location"],
             random_slug: SecureRandom.urlsafe_base64,
