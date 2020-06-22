@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 class SyncFollowersJob < ApplicationJob
   queue_as :default
 
