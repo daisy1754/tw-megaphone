@@ -19,6 +19,10 @@ class SendDmsJob < ApplicationJob
     followers = UserFollower.where(has_sent_dm: false).where(user_id: user.id).order("score desc").limit(limit)
     Delayed::Worker.logger.info("got #{followers.size}")
     followers.each do |f|
+      user_id = f.random_slug
+      text = dm.content.sub("${follower_name}", f.name)
+      text = text.sub("${email_link}", "#{ENV['ROOT_URL']}/emails/#{user_id}}")
+      text = text.sub("${optout_link}", "#{ENV['ROOT_URL']}/emails/#{user_id}}/optout")
       begin
         client.create_direct_message(f.uid.to_i, dm.content) if f.uid == "107416172"
         f.has_sent_dm = true
