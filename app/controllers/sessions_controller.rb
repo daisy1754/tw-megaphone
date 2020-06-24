@@ -6,13 +6,12 @@ class SessionsController < ApplicationController
       user.score_version = 0
       user.save
       session[:user_id] = user.id
-      flash[:notice] = "successfully authenticated"
       UserFollowerImport.create(user_id: user.id)
       Rule.create({ rule_type: "protected", score: -50, user_id: current_user.id })
       Rule.create({ rule_type: "verified", score: 50, user_id: current_user.id })
       Rule.create({ rule_type: "followers", score: 5, value: 100, user_id: current_user.id })
       SyncFollowersJob.perform_later user.id
-      redirect_to root_path
+      redirect_to followers_path
     end
   
     def destroy
