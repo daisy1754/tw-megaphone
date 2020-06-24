@@ -20,9 +20,21 @@ require("channels")
 import jquery, { type } from 'jquery';
 window.$ = window.jquery = jquery;
 
-import 'bootstrap'
+
+import 'bootstrap/js/dist/util'
+import 'bootstrap/js/dist/alert'
+import 'bootstrap/js/dist/button'
+import 'bootstrap/js/dist/carousel'
+import 'bootstrap/js/dist/collapse'
+import 'bootstrap/js/dist/dropdown'
+import 'bootstrap/js/dist/modal'
+import 'bootstrap/js/dist/popover'
+import 'bootstrap/js/dist/scrollspy'
+import 'bootstrap/js/dist/tab'
+import 'bootstrap/js/dist/tooltip'
+
 import '@fortawesome/fontawesome-free/js/all'
-import '../src/application.scss'
+import 'src/application.scss'
 
 function hideAndShow(toHideSelector, toShowSelector) {
   $(toHideSelector).hide();
