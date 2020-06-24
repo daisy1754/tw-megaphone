@@ -24,7 +24,7 @@ class SendDmsJob < ApplicationJob
       text = text.sub("${email_link}", "#{ENV['ROOT_URL']}/emails/#{user_id}}")
       text = text.sub("${optout_link}", "#{ENV['ROOT_URL']}/emails/#{user_id}}/optout")
       begin
-        client.create_direct_message(f.uid.to_i, text) if f.uid == "107416172"
+        client.create_direct_message(f.uid.to_i, text)
         f.has_sent_dm = true
         f.save
       rescue Twitter::Error::TooManyRequests => error
