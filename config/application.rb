@@ -17,5 +17,10 @@ module TwitterMassDms
     # the framework and any gems in your application.
 
     config.active_job.queue_adapter = :delayed_job
+    if ENV['SENTRY_URL'] then
+      Raven.configure do |config|
+        config.dsn = ENV['SENTRY_URL']
+      end
+    end
   end
 end
