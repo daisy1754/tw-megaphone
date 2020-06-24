@@ -114,7 +114,7 @@ function pollForFolloweSync() {
 }
 
 $(document).ready(function() {
-  $(".rule-select").change(function() {
+  $(document).on("change", ".rule-select", function() {
     const container = $(".rule-details-input-area");
     container.empty();
 
@@ -203,7 +203,7 @@ $(document).ready(function() {
   }
 
   /* -- dms/new --- */
-  $(".send-dm-confirm-btn").click(function() {
+  $(document).on("click", ".send-dm-confirm-btn", function() {
     hideAndShow(".submit-confirm", ".confirm-spinner");
     $(".cancel-btn").hide();
     const params = {
